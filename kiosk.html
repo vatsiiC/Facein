@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FaceIn Kiosk</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  html, body { height: 100%; }
+  body { display: flex; flex-direction: column; background: var(--navy); color: #fff; overflow: hidden; }
+  .k-top { display: flex; align-items: center; gap: 14px; padding: 10px 20px; background: #071a33; }
+  .k-top .brand { font-size: 1.5rem; }
+  .k-top select { width: auto; padding: 6px 10px; font-size: .95rem; }
+  .k-clock { margin-left: auto; font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .k-main { flex: 1; display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; padding: 20px; min-height: 0; }
+  .k-cam { position: relative; background: #000; border-radius: 16px; overflow: hidden; min-height: 0; }
+  .k-cam video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+  .k-cam .guide { position: absolute; inset: 12% 26%; border: 4px dashed #ffffff88; border-radius: 50%; pointer-events: none; }
+  .k-cam .off { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; font-size: 1.3rem; color: #c9d6ea; }
+  .k-panel { background: #fff; color: var(--ink); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 0; }
+  .k-big { font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 800; color: var(--navy); line-height: 1.15; margin: 0 0 12px; }
+  .k-sub { font-size: clamp(1.1rem, 2vw, 1.6rem); color: var(--muted); margin: 0 0 18px; }
+  .k-panel.ok { background: var(--ok-bg); } .k-panel.ok .k-big { color: var(--ok); }
+  .k-panel.warn { background: var(--warn-bg); } .k-panel.warn .k-big { color: var(--warn); }
+  .k-panel.bad { background: var(--bad-bg); } .k-panel.bad .k-big { color: var(--bad); }
+  .k-btn { font-size: 1.4rem; padding: 14px 28px; border-radius: 12px; margin: 6px; }
+  .pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: min(360px, 100%); margin-top: 8px; }
+  .pad button { font-size: 1.8rem; padding: 12px 0; border-radius: 12px; background: #eef3fa; color: var(--navy); border: 1px solid var(--line); }
+  .pad button.go { background: var(--ok); color: #fff; border-color: var(--ok); }
+  .pad-display { font-size: 2.2rem; font-weight: 800; letter-spacing: .3em; min-height: 3rem; color: var(--navy); border-bottom: 3px solid var(--line); min-width: 240px; margin-bottom: 6px; }
+  .tag { display: inline-block; padding: 4px 14px; border-radius: 999px; font-weight: 800; font-size: 1.2rem; background: var(--warn); color: #fff; }
+  .note { font-size: .95rem; color: var(--muted); margin-top: 14px; }
+  @media (max-aspect-ratio: 1/1) { .k-main { grid-template-columns: 1fr; grid-template-rows: 40vh 1fr; } }
+</style>
+</head>
+<body>
+<div class="proto-banner">Prototype - dummy data only</div>
+<div class="k-top">
+  <span class="brand">Face<span>In</span></span>
+  <select id="kiosk" aria-label="Kiosk"></select>
+  <span class="k-clock" id="clock"></span>
+</div>
+<div class="k-main">
+  <div class="k-cam"><video id="video" playsinline muted></video><div class="guide" id="guide"></div><div class="off" id="camoff" hidden></div></div>
+  <div class="k-panel" id="panel"></div>
+</div>
+<script src="/face.js"></script>
+<script src="/kiosk.js"></script>
+</body>
+</html>

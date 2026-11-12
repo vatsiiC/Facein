@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FaceIn - Login</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="proto-banner">Prototype - dummy data only</div>
+<div class="login-wrap">
+  <div class="hero">
+    <h1>Face<span style="color:#9cc3ff">In</span></h1>
+    <p style="font-size:1.15rem">Consent-first face attendance for small manufacturing units.</p>
+    <p>Workers do not log in. They mark attendance at the kiosk with their face (only if they agreed) or with their worker code and PIN.</p>
+    <a class="btn ghost" href="/kiosk">Open kiosk &rarr;</a>
+  </div>
+  <div class="card">
+    <h2>Staff login</h2>
+    <form id="f">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required></div>
+      <div id="err"></div>
+      <button type="submit" style="width:100%">Log in</button>
+    </form>
+    <h3>Demo accounts (password: Demo@123)</h3>
+    <div class="demo-list" id="demo"></div>
+  </div>
+</div>
+<script>
+const demos = [['supervisor@facein.demo','Supervisor (Manager)'],['hr@facein.demo','HR Clerk (view only)'],['owner@facein.demo','Owner (view only)'],['admin@facein.demo','Admin']];
+const demo = document.getElementById('demo');
+demos.forEach(([e,l]) => { const b = document.createElement('button'); b.type='button'; b.className='small';
+  b.innerHTML = `<strong>${l}</strong><br><span class="muted">${e}</span>`;
+  b.onclick = () => { document.getElementById('email').value = e; document.getElementById('pw').value = 'Demo@123'; }; demo.appendChild(b); });
+fetch('/api/me').then(r => { if (r.ok) location.href = '/app'; });
+document.getElementById('f').onsubmit = async ev => {
+  ev.preventDefault();
+  const r = await fetch('/api/login', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ email: document.getElementById('email').value, password: document.getElementById('pw').value }) });
+  const j = await r.json();
+  if (r.ok) location.href = '/app'; else document.getElementById('err').innerHTML = `<div class="msg err">${j.error}</div>`;
+};
+</script>
+</body>
+</html>

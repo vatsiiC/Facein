@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: facein
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: TZ
+        value: Asia/Kolkata
+      - key: FACE_THRESHOLD
+        value: "0.45"

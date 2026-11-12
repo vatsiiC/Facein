@@ -1,0 +1,16 @@
+{
+  "name": "facein",
+  "version": "1.0.0",
+  "description": "FaceIn - consent-first face attendance for small manufacturing units (prototype, dummy data only)",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "reset": "node -e \"require('fs').rmSync('data',{recursive:true,force:true})\""
+  },
+  "engines": { "node": ">=22.13.0" },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^5.1.0"
+  }
+}
